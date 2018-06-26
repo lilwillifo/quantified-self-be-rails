@@ -46,4 +46,15 @@ describe 'Foods API' do
     expect(food["name"]).to eq(params[:food][:name])
     expect(food["calories"]).to eq(params[:food][:calories].to_i)
   end
+
+  it 'can delete food and returns 204 status code' do
+    food = create(:food)
+
+    expect(Food.count).to eq(1)
+
+    delete "/api/v1/foods/#{food.id}"
+
+    expect(response.status).to eq(204)
+    expect(Food.count).to eq(0)
+  end
 end
