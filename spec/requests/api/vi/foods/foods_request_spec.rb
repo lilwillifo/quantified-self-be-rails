@@ -12,14 +12,14 @@ describe 'Foods API' do
     expect(foods.count).to eq(food_list.count)
   end
   it 'can create a food' do
-    params = { "food": { "name": "Calzone", "calories": 800} }
+    params = { "food": { "name": "Calzone", "calories": "800"} }
     post '/api/v1/foods', params: params
 
     expect(response).to be_success
 
     expect(Food.count).to eq(1)
 
-    params = { "food": { "name": "Calzone lite", "calories": 5} }
+    params = { "food": { "name": "Calzone lite", "calories": "5"} }
     post '/api/v1/foods', params: params
 
     expect(response).to be_success
@@ -34,5 +34,16 @@ describe 'Foods API' do
 
     food = JSON.parse(response.body)
     expect(food["name"]).to eq(foods.first.name)
+  end
+  it 'can edit food' do
+    food = create(:food)
+    params = { "food": { "name": "Mint", "calories": "14"} }
+    patch "/api/v1/foods/#{food.id}", params: params
+
+    expect(response).to be_success
+
+    food = JSON.parse(response.body)
+    expect(food["name"]).to eq(params[:food][:name])
+    expect(food["calories"]).to eq(params[:food][:calories].to_i)
   end
 end
