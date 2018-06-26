@@ -5,8 +5,6 @@
 
 
 ## Checklist:
-* Tested on RSPEC?
-* All test passing? 
-* Passing Spec Harness?
+* All test passing?
 
 ## Mentions:
