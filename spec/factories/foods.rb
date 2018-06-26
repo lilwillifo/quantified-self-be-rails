@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :food do
-    name 'pizza'
+    sequence(:name) {|n| "pizza#{n}"}
     calories 500
   end
 end
