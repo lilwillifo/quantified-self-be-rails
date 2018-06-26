@@ -26,4 +26,13 @@ describe 'Foods API' do
 
     expect(Food.count).to eq(2)
   end
+  it 'sends a single food by id' do
+    foods = create_list(:food, 3)
+    get "/api/v1/foods/#{foods.first.id}"
+
+    expect(response).to be_success
+
+    food = JSON.parse(response.body)
+    expect(food["name"]).to eq(foods.first.name)
+  end
 end
