@@ -54,6 +54,17 @@ describe 'Meals API' do
 
     post "/api/v1/meals/wrong/foods/bad"
     expect(status).to eq(404)
+  end
+  it 'can delete a food from a meal' do
+    meal = create(:meal)
+    food = meal.foods.create(name: 'milk steak', calories: '900')
+    delete "/api/v1/meals/#{meal.id}/foods/#{food.id}"
 
+    expect(response).to be_success
+    message = JSON.parse(response.body)
+    expect(message["message"]).to eq("Successfully removed #{food.name} from #{meal.name}")
+
+    delete "/api/v1/meals/#{meal.id}/foods/#{food.id}"
+    expect(status).to eq(404)
   end
 end
