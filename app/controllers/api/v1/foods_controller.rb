@@ -1,5 +1,4 @@
-class Api::V1::FoodsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+class Api::V1::FoodsController < ActionController::API
   def index
     render json: Food.all
   end
@@ -20,7 +19,8 @@ class Api::V1::FoodsController < ApplicationController
   end
 
   def update
-    render json: Food.update(params[:id], food_params)
+    food = Food.update(params[:id], food_params)
+    render json: food
   rescue
     render status: 400, json:{}
   end
