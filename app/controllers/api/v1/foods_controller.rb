@@ -19,7 +19,8 @@ class Api::V1::FoodsController < ActionController::API
   end
 
   def update
-    render json: Food.update(params[:id], food_params)
+    food = Food.update(params[:id], food_params)
+    render json: food
   rescue
     render status: 400, json:{}
   end
