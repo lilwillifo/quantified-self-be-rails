@@ -21,4 +21,24 @@ describe 'Meals API' do
     expect(meals.count).to eq(meal_list.count)
     expect(meals.first["foods"].count).to eq(meal_list.first.foods.count)
   end
+  it 'shows the associated foods with a specific meal id' do
+    meal = create(:meal)
+    get "/api/v1/meals/#{meal.id}/foods"
+
+    expect(response).to be_success
+
+    foods = JSON.parse(response.body)
+    expect(foods.count).to eq(0)
+
+    meal.foods.create!(name: 'Banana', calories: '20')
+    meal.foods.create!(name: 'Stand', calories: '100000')
+    create(:food)
+
+    get "/api/v1/meals/#{meal.id}/foods"
+
+    expect(response).to be_success
+
+    foods = JSON.parse(response.body)
+    expect(foods.count).to eq(meal.foods.count)
+  end
 end
