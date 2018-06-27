@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :meals, only: [:index]
       namespace :meals do
         get '/:id/foods', to: 'foods#index'
+        post '/:id/foods/:food_id', to: 'food_meals#create'
       end
     end
   end

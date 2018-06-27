@@ -41,4 +41,14 @@ describe 'Meals API' do
     foods = JSON.parse(response.body)
     expect(foods.count).to eq(meal.foods.count)
   end
+  it 'can add a food to a meal' do
+    meal = create(:meal)
+    food = create(:food)
+    post "/api/v1/meals/#{meal.id}/foods/#{food.id}"
+
+    expect(response).to be_success
+    message = JSON.parse(response.body)
+    expect(message["message"]).to eq("Successfully added #{food.name} to #{meal.name}")
+    expect(meal.foods).to eq([food])    
+  end
 end
