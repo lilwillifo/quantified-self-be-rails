@@ -45,11 +45,3 @@ Once the server is running, visit API endpoints in your browser:
 * Back end is deployed here: http://quantified-self-be-rails2-dev.us-west-2.elasticbeanstalk.com/api/v1/foods
 
 * To see the [front end](https://github.com/lilwillifo/quantified-self-fe) deployed with this app, visit http://gifted-print.surge.sh/
-
-## Built With
-
-* [JavaScript](https://www.javascript.com/)
-* [jQuery](https://jquery.com/)
-* [Express](https://expressjs.com/)
-* [Mocha](https://mochajs.org/)
-* [Chai](https://chaijs.com/)
