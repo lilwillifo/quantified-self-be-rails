@@ -16,6 +16,8 @@ describe 'Meals API' do
     expect(response).to be_success
 
     meals = JSON.parse(response.body)
+    binding.pry
+    #add foods to meals and finish serializer
     expect(meals.count).to eq(meal_list.count)
     expect(meals.first[:foods].count).to eq(meal_list.first.foods.count)
   end
