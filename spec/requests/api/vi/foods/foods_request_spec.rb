@@ -1,7 +1,14 @@
 require 'rails_helper'
 
 describe 'Foods API' do
-  it 'sends a list of foods' do
+  it 'sends a list of foods or empty array if none' do
+    get '/api/v1/foods'
+
+    expect(response).to be_success
+
+    foods = JSON.parse(response.body)
+    expect(foods.count).to eq(0)
+
     food_list = create_list(:food, 3)
 
     get '/api/v1/foods'
@@ -26,7 +33,18 @@ describe 'Foods API' do
 
     expect(Food.count).to eq(2)
   end
+  it 'does not create food without name and calories' do
+    params = { "food": { "name": "", "calories": ""} }
+    post '/api/v1/foods', params: params
+
+    expect(status).to eq(400)
+
+    expect(Food.count).to eq(0)
+  end
   it 'sends a single food by id' do
+    get "/api/v1/foods/123"
+    expect(status).to eq(404)
+
     foods = create_list(:food, 3)
     get "/api/v1/foods/#{foods.first.id}"
 
@@ -37,6 +55,10 @@ describe 'Foods API' do
   end
   it 'can edit food' do
     food = create(:food)
+    params = {}
+    patch "/api/v1/foods/#{food.id}", params: params
+    expect(status).to eq(400)
+
     params = { "food": { "name": "Mint", "calories": "14"} }
     patch "/api/v1/foods/#{food.id}", params: params
 
@@ -48,6 +70,8 @@ describe 'Foods API' do
   end
 
   it 'can delete food and returns 204 status code' do
+    delete "/api/v1/foods/123"
+    expect(status).to eq(404)
     food = create(:food)
 
     expect(Food.count).to eq(1)
