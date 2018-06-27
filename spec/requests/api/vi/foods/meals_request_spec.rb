@@ -49,6 +49,11 @@ describe 'Meals API' do
     expect(response).to be_success
     message = JSON.parse(response.body)
     expect(message["message"]).to eq("Successfully added #{food.name} to #{meal.name}")
-    expect(meal.foods).to eq([food])    
+    expect(meal.foods).to eq([food])
+    expect(status).to eq(201)
+
+    post "/api/v1/meals/wrong/foods/bad"
+    expect(status).to eq(404)
+
   end
 end

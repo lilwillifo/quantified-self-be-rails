@@ -3,7 +3,9 @@ class Api::V1::Meals::FoodMealsController < ActionController::API
     meal = Meal.find(params[:id])
     food = Food.find(params[:food_id])
     FoodMeal.create(food: food, meal: meal)
-    render json: message(food, meal)
+    render json: message(food, meal), status: 201
+  rescue
+    render status: 404, json: {}
   end
 
   private
