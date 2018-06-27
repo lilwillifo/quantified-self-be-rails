@@ -25,7 +25,7 @@ describe 'Meals API' do
     meal = create(:meal)
     get "/api/v1/meals/#{meal.id}/foods"
 
-    expect(response).to be_success
+    expect(status).to eq(404)
 
     foods = JSON.parse(response.body)
     expect(foods.count).to eq(0)

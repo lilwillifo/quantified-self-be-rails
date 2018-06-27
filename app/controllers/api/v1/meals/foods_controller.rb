@@ -1,5 +1,10 @@
 class Api::V1::Meals::FoodsController < ActionController::API
   def index
-    render json: Meal.find(params[:id]).foods
+    foods = Meal.find(params[:id]).foods
+    if foods.empty?
+      render status: 404, json: {}
+    else
+      render json: foods
+    end
   end
 end
